@@ -5,8 +5,8 @@
 #include <fstream>
 
 int main() {
-	string *addresses1 = new string[SIZE] { "Sofia", "Krivodol", "Gorno Iznanadolnishte", "Vakarel", "Vraca"};
-	string *addresses2 = new string[SIZE] {"Patalenica", "Dolno Iznanagornishte", "Pleven", "Belovo", "Burgas"};
+	string addresses1[] = { "Sofia", "Krivodol", "Gorno Iznanadolnishte", "Vakarel", "Vraca"};
+	string addresses2[] = {"Patalenica", "Dolno Iznanagornishte", "Pleven", "Belovo", "Burgas"};
 	
 	Addresses persons[] =
 					  {
@@ -41,6 +41,7 @@ int main() {
 	for (int i = 0; i < personsCount; i++) {
 		if (egn == persons[i].egn) {
 			doesEgnMatch = true;
+			std::cout << "\nFound user with that EGN:";
 			persons[i].showAddresses();
 		}
 	}
@@ -48,8 +49,5 @@ int main() {
 	{
 		std::cout << "\nPerson with that EGN does not exist" << endl;
 	}
-	
-	delete[] addresses1;
-	delete[] addresses2;
 	return 0;
 }

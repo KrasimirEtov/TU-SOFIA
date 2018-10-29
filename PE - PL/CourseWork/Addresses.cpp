@@ -23,11 +23,6 @@ Addresses::Addresses(string name, string egn, string address, string addresses[]
 
 Addresses::~Addresses()
 {
-//	for (int i = 0; i <= SIZE; i++)
-//	{
-//		//addresses[i].clear();
-//		//delete[] addresses;
-//	}
 	Person::clean();
 }
 
@@ -37,7 +32,7 @@ void Addresses::showAddresses()
 	std::cout << "\nAddresses for owned properties by " << this->name <<":\n" << endl;
 	for (int i = 0; i < addressesCount; i++)
 	{
-		std::cout << addresses[i] << endl;
+		std::cout << (i + 1) << ". " << addresses[i] << endl;
 	}
 }
 
@@ -49,14 +44,14 @@ ostream &operator<<(ostream& os, Addresses& person)
 	os << "\nAddresses that matches for " << person.name << " are:" << endl;
 	
 	std::vector<std::string> matchingAddressesNames = person.getMatchingAddresses();
-	if (matchingAddressesNames.size() == 0)
+	if (matchingAddressesNames.empty())
 	{
 		os << "No addresses were matched." << endl;
 		os << "===========================================================================" << endl;
 	}
 	else {
 		for (int i = 0; i < matchingAddressesNames.size(); i++) {
-			os << "Address[" << (i + 1) << "]: " << matchingAddressesNames[i];
+			os << "Address[" << (i) << "]: " << (i + 1) << ". " << matchingAddressesNames[i];
 		}
 		os << endl;
 	}
