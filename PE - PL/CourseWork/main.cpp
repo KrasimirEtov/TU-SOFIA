@@ -39,7 +39,7 @@ int main() {
 	std::cin >> egn;
 	
 	for (int i = 0; i < personsCount; i++) {
-		if (egn == persons[i].egn) {
+		if (egn == persons[i].getEgn()) {
 			doesEgnMatch = true;
 			std::cout << "\nFound user with that EGN:";
 			persons[i].showAddresses();

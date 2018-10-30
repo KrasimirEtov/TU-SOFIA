@@ -10,11 +10,17 @@ class Person
 {
 public:
 	Person();
-	Person(string name, string egn, string address);
-	void showPerson();
+	Person(string &name, string &egn, string &address);
+	void showPerson() const;
 	void clean();
+	const string getName() const;
+	const string getEgn() const;
+	const string getAddress() const;
+	void setName(string &name);
+	void setEgn(string &egn);
+	void setAddress(string &address);
 	~Person();
-public:
+protected:
 	string name;
 	string egn;
 	string address;

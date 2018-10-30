@@ -9,13 +9,14 @@ const int SIZE = 5;
 
 class Addresses : public Person
 {
+	// TODO GET AND SET METHODS
 public:
 	Addresses();
 	Addresses(string name, string egn, string address, string addresses[]);
 	~Addresses();
-	friend ostream& operator<<(ostream &os, Addresses& person);
-	void showAddresses();
-	std::vector<std::string> getMatchingAddresses();
+	friend ostream& operator<<(ostream &os, const Addresses& person);
+	void showAddresses() const;
+	std::vector<std::string> getMatchingAddresses() const;
 public:
 	string addresses[SIZE];
 	int addressesCount;

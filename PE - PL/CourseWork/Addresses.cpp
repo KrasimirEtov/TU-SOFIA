@@ -26,7 +26,7 @@ Addresses::~Addresses()
 	Person::clean();
 }
 
-void Addresses::showAddresses()
+void Addresses::showAddresses() const
 {
 	showPerson();
 	std::cout << "\nAddresses for owned properties by " << this->name <<":\n" << endl;
@@ -36,7 +36,7 @@ void Addresses::showAddresses()
 	}
 }
 
-ostream &operator<<(ostream& os, Addresses& person)
+ostream &operator<<(ostream& os, const Addresses& person)
 {
 	os << "===========================================================================" << endl;
 	os << "Name: " << person.name << "\nEGN: " << person.egn << "\nAddress: " << person.address << endl;
@@ -58,7 +58,7 @@ ostream &operator<<(ostream& os, Addresses& person)
 	return os;
 }
 
-std::vector<std::string> Addresses::getMatchingAddresses()
+std::vector<std::string> Addresses::getMatchingAddresses() const
 {
 	std::vector<std::string> matchingAddressesNames;
 	for (int i = 0; i < addressesCount; i++)
