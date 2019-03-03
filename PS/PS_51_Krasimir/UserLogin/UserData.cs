@@ -49,19 +49,14 @@ namespace UserLogin
 
 		public static User IsUserPasswordCorrect(string userName, string password)
 		{
-			foreach (User user in TestUsers)
-			{
-				if (user.UserName == userName && user.Password == password)
-				{
-					return user;
-				}
-			}
-			return null;
+			return TestUsers
+				.Where(x => x.UserName == userName && x.Password == password)
+				.FirstOrDefault();
 		}
 
-		public static void ChangeActivityDate(string userName, DateTime activeUntilDate)
+		public static void ChangeActivityDate(int userIndex, DateTime activeUntilDate)
 		{
-			User user = TestUsers.FirstOrDefault(x => x.UserName == userName);
+			User user = TestUsers[userIndex];
 
 			if (user != null)
 			{
@@ -70,9 +65,9 @@ namespace UserLogin
 			}
 		}
 
-		public static void AssignUserRole(string userName, UserRoles.Roles userRole)
+		public static void AssignUserRole(int userIndex, UserRoles.Roles userRole)
 		{
-			User user = TestUsers.FirstOrDefault(x => x.UserName == userName);
+			User user = TestUsers[userIndex];
 
 			if (user != null)
 			{
@@ -80,6 +75,18 @@ namespace UserLogin
 				LoginValidation.CurrentUserRole = userRole;
 				Logger.LogActivity($"Changed {user.UserName} role");
 			}
+		}
+
+		public static Dictionary<string, int> GetAllUsersUsernames()
+		{
+			Dictionary<string, int> result = new Dictionary<string, int>();
+
+			for (int i = 0; i < TestUsers.Count; i++)
+			{
+				result.Add(TestUsers[i].UserName, i);
+			}
+
+			return result;
 		}
 	}
 }

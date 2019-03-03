@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Text;
 
 namespace UserLogin
 {
@@ -12,7 +14,7 @@ namespace UserLogin
 			string password = Console.ReadLine();
 
 			LoginValidation loginValidation = new LoginValidation(userName, password, ErrorLogger);
-			
+
 			if (loginValidation.ValidateUserInput(out User user))
 			{
 				AdminPanel();
@@ -46,20 +48,42 @@ namespace UserLogin
 			Console.WriteLine("0: Exit");
 			Console.WriteLine("1: Change user role");
 			Console.WriteLine("2: Change user activity date");
+			Console.WriteLine("3: See all users");
+			Console.WriteLine("4: View log file");
+			Console.WriteLine("5: View current session activity");
 
 			int choice = int.Parse(Console.ReadLine());
-
+			var allUserNames = UserData.GetAllUsersUsernames();
+			string userNameToEdit;
 			switch (choice)
 			{
 				case 0:
-					break;
+					return;
 				case 1:
 					Console.WriteLine("Enter user name and role");
-					UserData.AssignUserRole(Console.ReadLine(), (UserRoles.Roles)int.Parse(Console.ReadLine()));
+					userNameToEdit = Console.ReadLine();
+					UserData.AssignUserRole(allUserNames[userNameToEdit], (UserRoles.Roles)int.Parse(Console.ReadLine()));
 					break;
 				case 2:
 					Console.WriteLine("Enter user name and date");
-					UserData.ChangeActivityDate(Console.ReadLine(), DateTime.Parse(Console.ReadLine()));
+					userNameToEdit = Console.ReadLine();
+					UserData.ChangeActivityDate(allUserNames[userNameToEdit], DateTime.Parse(Console.ReadLine()));
+					break;
+				case 3:
+					foreach (var user in allUserNames)
+					{
+						Console.WriteLine(user.Key);
+					}		
+					break;
+				case 4:
+					StreamReader sr = new StreamReader("logFilePS.txt");
+					string logResult = sr.ReadToEnd();
+					Console.WriteLine(logResult);
+					sr.Close();
+					break;
+				case 5:
+					string result = Logger.GetCurrentSessionActivities("login");
+					Console.WriteLine(result);
 					break;
 			}
 		}

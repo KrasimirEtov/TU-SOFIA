@@ -19,5 +19,7 @@ namespace StudentRepository
 		public int Course { get; set; }
 		public int Stream { get; set; }
 		public int Group { get; set; }
+		public DateTime LastCertification { get; set; }
+		public DateTime LastPayment { get; set; }
 	}
 }
