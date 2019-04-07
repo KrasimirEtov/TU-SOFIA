@@ -47,9 +47,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Student.cs" />
     <Compile Include="StudentData.cs" />
+    <Compile Include="StudentValidation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UserLogin\UserLogin.csproj">
+      <Project>{138c5207-6231-4089-9f96-dc795c640b4e}</Project>
+      <Name>UserLogin</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserLogin", "UserLogin\User
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentRepository", "StudentRepository\StudentRepository.csproj", "{4053F32C-5D23-44CD-A22E-529D7E20684F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentInfoSystem", "StudentInfoSystem\StudentInfoSystem.csproj", "{EF88E54E-4642-4CC6-829E-D20C5CAEBDA5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfHello", "WpfHello\WpfHello.csproj", "{451B5E53-46CA-4A52-BD91-51677CC1704D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{4053F32C-5D23-44CD-A22E-529D7E20684F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4053F32C-5D23-44CD-A22E-529D7E20684F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4053F32C-5D23-44CD-A22E-529D7E20684F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF88E54E-4642-4CC6-829E-D20C5CAEBDA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF88E54E-4642-4CC6-829E-D20C5CAEBDA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF88E54E-4642-4CC6-829E-D20C5CAEBDA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF88E54E-4642-4CC6-829E-D20C5CAEBDA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{451B5E53-46CA-4A52-BD91-51677CC1704D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{451B5E53-46CA-4A52-BD91-51677CC1704D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{451B5E53-46CA-4A52-BD91-51677CC1704D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{451B5E53-46CA-4A52-BD91-51677CC1704D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
