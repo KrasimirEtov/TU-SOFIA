@@ -6,7 +6,7 @@ namespace UserLogin
 {
 	public static class UserData
 	{
-		public static List<User> TestUsers { get; private set; }
+		public static List<User> Users { get; private set; }
 
 		static UserData()
 		{
@@ -15,7 +15,7 @@ namespace UserLogin
 
 		private static void ResetTestUserData()
 		{
-			TestUsers = new List<User>()
+			Users = new List<User>()
 			{
 				new User()
 				{
@@ -49,14 +49,14 @@ namespace UserLogin
 
 		public static User IsUserPasswordCorrect(string userName, string password)
 		{
-			return TestUsers
+			return Users
 				.Where(x => x.UserName == userName && x.Password == password)
 				.FirstOrDefault();
 		}
 
 		public static void ChangeActivityDate(int userIndex, DateTime activeUntilDate)
 		{
-			User user = TestUsers[userIndex];
+			User user = Users[userIndex];
 
 			if (user != null)
 			{
@@ -67,7 +67,7 @@ namespace UserLogin
 
 		public static void AssignUserRole(int userIndex, UserRoles.Roles userRole)
 		{
-			User user = TestUsers[userIndex];
+			User user = Users[userIndex];
 
 			if (user != null)
 			{
@@ -81,9 +81,9 @@ namespace UserLogin
 		{
 			Dictionary<string, int> result = new Dictionary<string, int>();
 
-			for (int i = 0; i < TestUsers.Count; i++)
+			for (int i = 0; i < Users.Count; i++)
 			{
-				result.Add(TestUsers[i].UserName, i);
+				result.Add(Users[i].UserName, i);
 			}
 
 			return result;
