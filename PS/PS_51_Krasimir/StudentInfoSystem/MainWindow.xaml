@@ -8,31 +8,31 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid x:Name="MyMainWindowGrid">
         <GroupBox x:Name="gbPersonalData" Header="Лични данни" HorizontalAlignment="Left" Height="136" Margin="10,10,0,0" VerticalAlignment="Top" Width="486">
-            <TextBox x:Name="txtFirstName" HorizontalAlignment="Left" Height="22" Margin="90,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False"/>
+			<TextBox x:Name="txtFirstName" HorizontalAlignment="Left" Height="22" Margin="90,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False" Text="{Binding Student.FirstName, Mode=OneWay}"/>
         </GroupBox>
         <Label x:Name="lblFirstName" Content="Име:" HorizontalAlignment="Left" Margin="15,35,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lblSurName" Content="Презиме:" HorizontalAlignment="Left" Margin="15,71,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtSurName" HorizontalAlignment="Left" Height="23" Margin="105,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False"/>
+		<TextBox x:Name="txtSurName" HorizontalAlignment="Left" Height="23" Margin="105,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False" Text="{Binding Student.SurName, Mode=OneWay}"/>
         <Label x:Name="lblLastName" Content="Фамилия:" HorizontalAlignment="Left" Margin="15,110,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtLastName" HorizontalAlignment="Left" Height="23" Margin="105,110,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False"/>
+		<TextBox x:Name="txtLastName" HorizontalAlignment="Left" Height="23" Margin="105,110,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False" Text="{Binding Student.LastName, Mode=OneWay}"/>
         <GroupBox x:Name="gbStudentInformation" Header="Студентска информация" HorizontalAlignment="Left" Height="259" Margin="15,151,0,0" VerticalAlignment="Top" Width="481">
             <Label x:Name="lblFaculty" Content="Факултет:" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top"/>
         </GroupBox>
-        <TextBox x:Name="txtFaculty" HorizontalAlignment="Left" Height="22" Margin="105,176,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False"/>
+		<TextBox x:Name="txtFaculty" HorizontalAlignment="Left" Height="22" Margin="105,176,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False" Text="{Binding Student.Faculty, Mode=OneWay}"/>
         <Label x:Name="lblSpecialty" Content="Специалност:" HorizontalAlignment="Left" Margin="15,216,0,0" VerticalAlignment="Top" Grid.RowSpan="2"/>
-        <TextBox x:Name="txtSpecialty" HorizontalAlignment="Left" Height="23" Margin="105,216,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False"/>
+		<TextBox x:Name="txtSpecialty" HorizontalAlignment="Left" Height="23" Margin="105,216,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False" Text="{Binding Student.Specialty, Mode=OneWay}"/>
         <Label x:Name="lblDegree" Content="ОКС:" HorizontalAlignment="Left" Margin="15,255,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtDegree" HorizontalAlignment="Left" Height="23" Margin="105,255,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False"/>
+		<TextBox x:Name="txtDegree" HorizontalAlignment="Left" Height="23" Margin="105,255,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False" Text="{Binding Student.Degree, Mode=OneWay}"/>
         <Label x:Name="lblStatus" Content="Статус:" HorizontalAlignment="Left" Margin="15,294,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtStatus" HorizontalAlignment="Left" Height="23" Margin="105,294,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False"/>
+		<TextBox x:Name="txtStatus" HorizontalAlignment="Left" Height="23" Margin="105,294,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False" Text="{Binding Student.Status, Mode=OneWay}"/>
         <Label x:Name="lblFacultyNumber" Content="Фак. номер:" HorizontalAlignment="Left" Margin="15,334,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtFacultyNumber" HorizontalAlignment="Left" Height="23" Margin="105,334,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False"/>
+		<TextBox x:Name="txtFacultyNumber" HorizontalAlignment="Left" Height="23" Margin="105,334,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False" Text="{Binding Student.FacultyNumber, Mode=OneWay}"/>
         <Label x:Name="lblCourse" Content="Курс:" HorizontalAlignment="Left" Margin="260,176,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtCourse" HorizontalAlignment="Left" Height="23" Margin="307,176,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" IsEnabled="False"/>
+		<TextBox x:Name="txtCourse" HorizontalAlignment="Left" Height="23" Margin="307,176,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" IsEnabled="False" Text="{Binding Student.Course, Mode=OneWay}"/>
         <Label x:Name="lblStream" Content="Поток:" HorizontalAlignment="Left" Margin="260,213,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtStream" HorizontalAlignment="Left" Height="23" Margin="307,219,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" IsEnabled="False"/>
+		<TextBox x:Name="txtStream" HorizontalAlignment="Left" Height="23" Margin="307,219,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" IsEnabled="False" Text="{Binding Student.Stream, Mode=OneWay}"/>
         <Label x:Name="lblGroup" Content="Група:" HorizontalAlignment="Left" Margin="262,260,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtGroup" HorizontalAlignment="Left" Height="23" Margin="307,263,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" IsEnabled="False"/>
+		<TextBox x:Name="txtGroup" HorizontalAlignment="Left" Height="23" Margin="307,263,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" IsEnabled="False" Text="{Binding Student.Group, Mode=OneWay}"/>
         <Button x:Name="btnClearData" Content="Изчисти данните" HorizontalAlignment="Left" Margin="262,35,0,0" VerticalAlignment="Top" Click="BtnClearData_Click"/>
         <Button x:Name="btnFillData" Content="Попълни данни" HorizontalAlignment="Left" Margin="262,71,0,0" VerticalAlignment="Top" Width="98" Click="BtnFillData_Click"/>
         <Button x:Name="btnDisableInputs" Content="Забрани въвеждане" HorizontalAlignment="Left" Margin="262,113,0,0" VerticalAlignment="Top" Click="BtnDisableInputs_Click"/>
@@ -44,5 +44,6 @@
         <Label x:Name="lblPassword" Content="Парола:" HorizontalAlignment="Left" Margin="501,263,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtInputPassword" HorizontalAlignment="Left" Height="23" Margin="628,263,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Button x:Name="btnLogin" Content="Вход" HorizontalAlignment="Left" Margin="628,305,0,0" VerticalAlignment="Top" Width="120" Click="BtnLogin_Click"/>
-    </Grid>
+		<Button x:Name="btnLogout" Content="Изход" HorizontalAlignment="Left" Margin="503,305,0,0" VerticalAlignment="Top" Width="120" Click="BtnLogout_Click" Visibility="Hidden"/>
+	</Grid>
 </Window>

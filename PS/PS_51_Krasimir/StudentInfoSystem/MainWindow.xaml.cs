@@ -1,36 +1,42 @@
 ﻿using StudentRepository;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using UserLogin;
-using System.Linq;
 
 namespace StudentInfoSystem
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        public MainWindow()
+		private Student student;
+		public Student Student
+		{
+			get
+			{
+				return this.student;
+			}
+			set
+			{
+				student = value;
+				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Student"));
+			}
+		}
+
+		public MainWindow()
         {
             InitializeComponent();
-        }
+			this.DataContext = this;
+		}
 
-        private void BtnClearData_Click(object sender, RoutedEventArgs e)
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		private void BtnClearData_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: Find better way of doing this
-            txtCourse.Text = "";
-            txtDegree.Text = "";
-            txtFaculty.Text = "";
-            txtFacultyNumber.Text = "";
-            txtFirstName.Text = "";
-            txtGroup.Text = "";
-            txtLastName.Text = "";
-            txtSpecialty.Text = "";
-            txtStatus.Text = "";
-            txtStream.Text = "";
-            txtSurName.Text = "";
-        }
+			Student = null;
+		}
 
         private void BtnFillData_Click(object sender, RoutedEventArgs e)
         {
@@ -53,17 +59,12 @@ namespace StudentInfoSystem
 
         private void BtnDisableInputs_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: Find better way of doing this
             DisableInputFields();
-
-
         }
 
         private void BtnEnableInputs_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: Find better way of doing this
             EnableInputFields();
-
         }
 
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
@@ -81,11 +82,12 @@ namespace StudentInfoSystem
 
             var studentRepo = new StudentData();
             var student = studentRepo.IsThereStudent(user.FacultyNumber);
-
-            FillInputBoxesData(student);
+			Student = student;
             EnableInputFields();
             txtInputPassword.Text = "";
             txtInputUserName.Text = "";
+			btnLogin.Visibility = Visibility.Hidden;
+			btnLogout.Visibility = Visibility.Visible;
         }
 
         private void EnableInputFields()
@@ -118,19 +120,11 @@ namespace StudentInfoSystem
             txtSurName.IsEnabled = false;
         }
 
-        private void FillInputBoxesData(Student student)
-        {
-            txtCourse.Text = student.Course.ToString();
-            txtDegree.Text = student.Degree;
-            txtFaculty.Text = student.Faculty;
-            txtFacultyNumber.Text = student.FacultyNumber;
-            txtFirstName.Text = student.FirstName;
-            txtGroup.Text = student.Group.ToString();
-            txtLastName.Text = student.LastName;
-            txtSpecialty.Text = student.Specialty;
-            txtStatus.Text = student.Status;
-            txtStream.Text = student.Stream.ToString();
-            txtSurName.Text = student.SurName;
-        }
-    }
+		private void BtnLogout_Click(object sender, RoutedEventArgs e)
+		{
+			Student = null;
+			btnLogout.Visibility = Visibility.Hidden;
+			btnLogin.Visibility = Visibility.Visible;
+		}
+	}
 }
