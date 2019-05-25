@@ -57,6 +57,21 @@ namespace RSAencryption
 			//Console.WriteLine("As ASCII: " + decoded);
 		}
 
+		private static BigInteger EncodeMessage(string message, BigInteger publicKey, BigInteger N)
+		{
+			byte[] messageToByteArray = Encoding.ASCII.GetBytes(message);
+			BigInteger encoded = new BigInteger(messageToByteArray);
+
+			return BigInteger.ModPow(encoded, publicKey, N);
+		}
+
+		private static string DecodeMessage(BigInteger encodedMessage, BigInteger privateKey, BigInteger N)
+		{
+			var decodedMessage = BigInteger.ModPow(encodedMessage, privateKey, N);
+
+			return Encoding.ASCII.GetString(decodedMessage.ToByteArray());
+		}
+
 		private static void LoadData()
 		{
 			users = new List<User>();
@@ -68,16 +83,15 @@ namespace RSAencryption
 			String user;
 			String privateKey;
 			String publicKey;
-			while ((user = usersReader.readLine()) != null)
-			{
-				privateKey = privateKeyReader.readLine();
-				publicKey = publicKeyReader.readLine();
-				String[] userSplit = user.split(" ");
-				String[] privateKeySplit = privateKey.split(" ");
-				String[] publicKeySplit = publicKey.split(" ");
+			//while ((user = usersReader.readLine()) != null)
+			//{
+			//	privateKey = privateKeyReader.readLine();
+			//	publicKey = publicKeyReader.readLine();
+			//	String[] userSplit = user.split(" ");
+			//	String[] privateKeySplit = privateKey.split(" ");
+			//	String[] publicKeySplit = publicKey.split(" ");
 
-				users.add(new User(userSplit[0], userSplit[1], new BigInteger(userSplit[2]), new BigInteger(privateKeySplit[1]), new BigInteger(publicKeySplit[1])));
-			}
+			//	users.add(new User(userSplit[0], userSplit[1], new BigInteger(userSplit[2]), new BigInteger(privateKeySplit[1]), new BigInteger(publicKeySplit[1])));
 		}
 	}
 }
