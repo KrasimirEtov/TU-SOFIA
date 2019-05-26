@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Numerics;
 using System.Security.Cryptography;
 using System.Text;
+using Org.BouncyCastle.Math;
 
 namespace CourseProject
 {
@@ -65,13 +65,13 @@ namespace CourseProject
 			Console.WriteLine("Enter password");
 			var password = Console.ReadLine();
 
-			var p = GetRandomNumber();
-			var q = GetRandomNumber();
-			var N = GenerateN(p, q);
-			var fN = GenerateFn(p, q);
+			var p = GetRandomNumber(); // random number that passes rabin miller test
+			var q = GetRandomNumber(); // random number that passes rabin miller test
+			var N = GenerateN(p, q); // not secret parameter
+			var fN = GenerateFn(p, q); // secret parameter - used later for keys
 
-			var publicKey = GetPublicKey();
-			var privateKey = GetPrivateKey(publicKey, fN);
+			var publicKey = GetPublicKey(fN); // public key => 0 < k < fN, and gcd(k) = 1
+			var privateKey = GetPrivateKey(publicKey, fN); // multiplicative inverse
 
 			string usersInfo = userName + " " + password + " " + N + "\n";
 			string privateKeysInfo = userName + " " + privateKey.ToString() + "\n";
@@ -139,15 +139,15 @@ namespace CourseProject
 
 			foreach (var userLine in userFile)
 			{
-				if (userLine.Contains(userName))
+				var userInfo = userLine.Split();
+				if (userInfo[0] == userName)
 				{
-					var userInfo = userLine.Split();
 					CurrentUser.UserName = userInfo[0];
 					if (!string.IsNullOrEmpty(password))
 					{
 						CurrentUser.Password = userInfo[1];
 					}
-					CurrentUser.N = BigInteger.Parse(userInfo[2]);
+					CurrentUser.N = new BigInteger(userInfo[2]);
 				}
 			}
 
@@ -155,10 +155,10 @@ namespace CourseProject
 
 			foreach (var privateKeyLine in privateKeysFile)
 			{
-				if (privateKeyLine.Contains(userName))
+				var userInfo = privateKeyLine.Split();
+				if (userInfo[0] == userName)
 				{
-					var userInfo = privateKeyLine.Split();
-					CurrentUser.PrivateKey = BigInteger.Parse(userInfo[1]);
+					CurrentUser.PrivateKey = new BigInteger(userInfo[1]);
 				}
 			}
 
@@ -166,10 +166,10 @@ namespace CourseProject
 
 			foreach (var publicKeysLine in publicKeysFile)
 			{
-				if (publicKeysLine.Contains(userName))
+				var userInfo = publicKeysLine.Split();
+				if (userInfo[0] == userName)
 				{
-					var userInfo = publicKeysLine.Split();
-					CurrentUser.PublicKey = BigInteger.Parse(userInfo[1]);
+					CurrentUser.PublicKey = new BigInteger(userInfo[1]);
 				}
 			}
 		}
@@ -179,12 +179,12 @@ namespace CourseProject
 			byte[] messageToByteArray = Encoding.ASCII.GetBytes(message);
 			BigInteger encoded = new BigInteger(messageToByteArray);
 
-			return BigInteger.ModPow(encoded, publicKey, N);
+			return encoded.ModPow(publicKey, N);
 		}
 
 		private static string DecodeMessage(BigInteger encodedMessage, BigInteger privateKey, BigInteger N)
 		{
-			var decodedMessage = BigInteger.ModPow(encodedMessage, privateKey, N);
+			var decodedMessage = encodedMessage.ModPow(privateKey, N);
 
 			return Encoding.ASCII.GetString(decodedMessage.ToByteArray());
 		}
@@ -193,8 +193,10 @@ namespace CourseProject
 		{
 			while (true)
 			{
-				var number = new BigInteger(GenerateRandomNumberByteArray());
-				if (IsPrimeByMillerRabin(number, 10))
+				Random random = new Random();
+				var number = new BigInteger(1024, random);
+
+				if (number.RabinMillerTest(10, random))
 				{
 					return number;
 				}
@@ -205,7 +207,7 @@ namespace CourseProject
 		{
 			using (RandomNumberGenerator rng = new RNGCryptoServiceProvider())
 			{
-				byte[] bytes = new byte[64];
+				byte[] bytes = new byte[1024];
 				rng.GetBytes(bytes);
 
 				return bytes;
@@ -214,106 +216,27 @@ namespace CourseProject
 
 		private static BigInteger GenerateN(BigInteger p, BigInteger q)
 		{
-			return BigInteger.Multiply(p, q);
+			return p.Multiply(q);
 		}
 
 		private static BigInteger GenerateFn(BigInteger p, BigInteger q)
 		{
-			return BigInteger.Multiply(BigInteger.Subtract(p, 1), BigInteger.Subtract(q, 1));
+			return p.Subtract(BigInteger.One).Multiply(q.Subtract(BigInteger.One));
 		}
 
-		private static BigInteger GetPublicKey()
+		private static BigInteger GetPublicKey(BigInteger fN)
 		{
-			return new BigInteger(65537);
-		}
-
-		public static bool IsPrimeByMillerRabin(BigInteger source, int certainty)
-		{
-			if (source == 2 || source == 3)
-				return true;
-			if (source < 2 || source % 2 == 0)
-				return false;
-
-			BigInteger d = source - 1;
-			int s = 0;
-
-			while (d % 2 == 0)
+			BigInteger K = GetRandomNumber();
+			while (fN.Gcd(K).CompareTo(BigInteger.One) > 0 && K.CompareTo(fN) < 0)
 			{
-				d /= 2;
-				s += 1;
+				K = K.Add(BigInteger.One);
 			}
-
-			// There is no built-in method for generating random BigInteger values.
-			// Instead, random BigIntegers are constructed from randomly generated
-			// byte arrays of the same length as the source.
-			RandomNumberGenerator rng = RandomNumberGenerator.Create();
-			byte[] bytes = new byte[source.ToByteArray().LongLength];
-			BigInteger a;
-
-			for (int i = 0; i < certainty; i++)
-			{
-				do
-				{
-					// This may raise an exception in Mono 2.10.8 and earlier.
-					// http://bugzilla.xamarin.com/show_bug.cgi?id=2761
-					rng.GetBytes(bytes);
-					a = new BigInteger(bytes);
-				}
-				while (a < 2 || a >= source - 2);
-
-				BigInteger x = BigInteger.ModPow(a, d, source);
-				if (x == 1 || x == source - 1)
-					continue;
-
-				for (int r = 1; r < s; r++)
-				{
-					x = BigInteger.ModPow(x, 2, source);
-					if (x == 1)
-						return false;
-					if (x == source - 1)
-						break;
-				}
-
-				if (x != source - 1)
-					return false;
-			}
-			return true;
+			return K;
 		}
 
 		private static BigInteger GetPrivateKey(BigInteger publicKey, BigInteger fN)
 		{
-			BigInteger inv, u1, u3, v1, v3, t1, t3, q;
-			BigInteger iter;
-			/* Step X1. Initialise */
-			u1 = 1;
-			u3 = publicKey;
-			v1 = 0;
-			v3 = fN;
-			/* Remember odd/even iterations */
-			iter = 1;
-			/* Step X2. Loop while v3 != 0 */
-			while (v3 != 0)
-			{
-				/* Step X3. Divide and "Subtract" */
-				q = u3 / v3;
-				t3 = u3 % v3;
-				t1 = u1 + q * v1;
-				/* Swap */
-				u1 = v1;
-				v1 = t1;
-				u3 = v3;
-				v3 = t3;
-				iter = -iter;
-			}
-			/* Make sure u3 = gcd(u,v) == 1 */
-			if (u3 != 1)
-				return 0;   /* Error: No inverse exists */
-							/* Ensure a positive result */
-			if (iter < 0)
-				inv = fN - u1;
-			else
-				inv = u1;
-			return inv;
+			return publicKey.ModInverse(fN);
 		}
 	}
 }
